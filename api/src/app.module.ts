@@ -6,7 +6,6 @@ import { BattlesModule } from './battle/battles.module';
 import { DbModule } from './db/db.module';
 import { TypepokemonModule } from './typepokemon/typepokemon.module';
 
-
 @Module({
   imports: [PokemonModule, BattlesModule, DbModule, TypepokemonModule],
   controllers: [AppController],

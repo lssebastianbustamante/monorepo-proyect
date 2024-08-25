@@ -7,8 +7,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pokemon } from './entities/pokemon.entity';
 import { Repository } from 'typeorm';
-import { CreatePokemonDto } from './dto/create-pokemon.dto';
+// import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { TypePokemon } from '../typepokemon/entities/typepokemon.entity';
+import { CreatePokemonDto } from './dto/create-pokemon.dto';
 
 @Injectable()
 export class PokemonService {
@@ -21,7 +22,7 @@ export class PokemonService {
 
   async getPokemons() {
     return await this.pokemonRepository.find({
-      relations: ['type'],
+      relations: ['typepokemon'],
     });
   }
   async getPokemon(id: number) {
@@ -29,7 +30,7 @@ export class PokemonService {
       where: {
         id,
       },
-      relations: ['type'],
+      relations: ['typepokemon'],
     });
 
     if (!pokemonFound)
@@ -38,11 +39,11 @@ export class PokemonService {
   }
 
   async battlePokemon(pokemonUno: number, pokemonDos: number) {
-    const pokemon1: CreatePokemonDto = await this.pokemonRepository.findOne({
+    const pokemon1 = await this.pokemonRepository.findOne({
       where: { id: await pokemonUno },
     });
 
-    const pokemon2: CreatePokemonDto = await this.pokemonRepository.findOne({
+    const pokemon2 = await this.pokemonRepository.findOne({
       where: {
         id: pokemonDos,
       },
@@ -71,13 +72,21 @@ export class PokemonService {
     }
   }
 
-  async createPokemon(pokemonData: CreatePokemonDto): Promise<Pokemon> {
-    const type = await this.typePokemonRepository.findOneBy(pokemonData.type);
+  async createPokemon(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
+    const type = await this.typePokemonRepository.findOne({
+      where: {
+        name: createPokemonDto.typepokemon,
+      },
+    });
+
     if (!type) {
       throw new NotFoundException('Tipo no encontrado');
     }
 
-    const newPokemon = this.pokemonRepository.create({ ...pokemonData, type });
+    const newPokemon = this.pokemonRepository.create({
+      ...createPokemonDto,
+      typepokemon: type,
+    });
     return this.pokemonRepository.save(newPokemon);
   }
 }

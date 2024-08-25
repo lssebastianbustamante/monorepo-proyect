@@ -24,6 +24,8 @@ export class Pokemon {
   @Column({ name: 'imageUrl', length: 70, nullable: false })
   imageUrl: string;
 
-  @ManyToOne(() => TypePokemon, (typepokemon) => typepokemon.pokemons)
-  type: TypePokemon;
+  @ManyToOne(() => TypePokemon, (typepokemon) => typepokemon.id, {
+    eager: true,
+  })
+  typepokemon: TypePokemon;
 }

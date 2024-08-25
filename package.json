@@ -8,7 +8,9 @@
     "app"
   ],
   "scripts": {
-    "dev": "concurrently \"cd api && npm run dev\" \"cd app && npm run dev\""
+    "dev": "concurrently \"cd api && npm run dev\" \"cd app && npm run dev\"",
+    "db:create": "npm run db:create --workspace=api",
+    "seed:run": "npm run seed:run --workspace=api"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -39,7 +41,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5"
+    "typescript": "^5.5.4"
   },
   "keywords": [],
   "author": "",

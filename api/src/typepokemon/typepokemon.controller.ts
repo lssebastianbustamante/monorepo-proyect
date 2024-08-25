@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { TypepokemonService } from './typepokemon.service';
 import { CreateTypepokemonDto } from './dto/create-typepokemon.dto';
 
@@ -20,7 +20,6 @@ export class TypepokemonController {
   findOne(@Param('id') id: string) {
     return this.typepokemonService.findOne(+id);
   }
-
 
   @Delete(':id')
   remove(@Param('id') id: string) {

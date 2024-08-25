@@ -1,4 +1,4 @@
-import { Pokemon } from 'src/pokemon/entities/pokemon.entity';
+import { Pokemon } from '../../pokemon/entities/pokemon.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -9,6 +9,6 @@ export class TypePokemon {
   @Column()
   name: string;
 
-  @OneToMany(() => Pokemon, (pokemon) => pokemon.type)
+  @OneToMany(() => Pokemon, (pokemon) => pokemon.typepokemon)
   pokemons: Pokemon[];
 }

@@ -1,9 +1,6 @@
 import { IsInt, IsNotEmpty, IsPositive, IsString } from 'class-validator';
 
 export class CreatePokemonDto {
-  @IsPositive()
-  id: number;
-
   @IsNotEmpty({ message: 'Field name must be added' })
   @IsString()
   name: string;
@@ -32,5 +29,5 @@ export class CreatePokemonDto {
   imageUrl: string;
 
   @IsNotEmpty({ message: 'Provide an Type' })
-  type: object;
+  typepokemon?: string;
 }
