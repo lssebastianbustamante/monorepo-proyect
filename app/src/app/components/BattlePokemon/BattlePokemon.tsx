@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
 import axios from "axios";
-import { Pokemon } from "@/app/interfaces/pokemon";
+import { Pokemon, PokemonContextType } from "@/app/interfaces/pokemon";
 import PokemonCard from "./PokemonCard";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -13,34 +13,32 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { json } from "stream/consumers";
+import Context from "../PokemonList/pokemonContext";
 
 interface pokemonWinner {
   name: string;
   id: number;
 }
 
-interface PropsPokemons {
-  pokemonsArray: Pokemon[]
-}
 
-const PokemonBattle: React.FC<PropsPokemons> = ({pokemonsArray}) => {
+
+const PokemonBattle: React.FC = () => {
+  const {PokemonsContext} = useContext(Context) as PokemonContextType;
   const [loading, setLoading] = useState(true);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon[]>([]);
   const [winner, setWinner] = useState(false);
   const [pokemonWinner, setPokemonWinner] = useState<pokemonWinner>();
   const [error, setError] = useState<string | null>(null);
 
-
   const handleSelectClick = () => {
-    const randomIndex1 = Math.floor(Math.random() * pokemonsArray.length);
-    const randomIndex2 = Math.floor(Math.random() * pokemonsArray.length);
+    const randomIndex1 = Math.floor(Math.random() * PokemonsContext.length);
+    const randomIndex2 = Math.floor(Math.random() * PokemonsContext.length);
 
     if (randomIndex1 !== randomIndex2) {
       setSelectedPokemon([
         ...selectedPokemon,
-        pokemonsArray[randomIndex1],
-        pokemonsArray[randomIndex2],
+        PokemonsContext[randomIndex1],
+        PokemonsContext[randomIndex2],
       ]);
       setLoading(false);
     } else {

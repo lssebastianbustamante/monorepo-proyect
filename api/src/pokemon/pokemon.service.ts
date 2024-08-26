@@ -7,22 +7,21 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pokemon } from './entities/pokemon.entity';
 import { Repository } from 'typeorm';
-// import { CreatePokemonDto } from './dto/create-pokemon.dto';
-import { TypePokemon } from '../typepokemon/entities/typepokemon.entity';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
+import { Type } from '../typepokemon/entities/typepokemon.entity';
 
 @Injectable()
 export class PokemonService {
   constructor(
     @InjectRepository(Pokemon)
     private pokemonRepository: Repository<Pokemon>,
-    @InjectRepository(TypePokemon)
-    private typePokemonRepository: Repository<TypePokemon>,
+    @InjectRepository(Type)
+    private typePokemonRepository: Repository<Type>,
   ) {}
 
   async getPokemons() {
     return await this.pokemonRepository.find({
-      relations: ['typepokemon'],
+      relations: ['type'],
     });
   }
   async getPokemon(id: number) {
@@ -75,7 +74,7 @@ export class PokemonService {
   async createPokemon(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {
     const type = await this.typePokemonRepository.findOne({
       where: {
-        name: createPokemonDto.typepokemon,
+        name: createPokemonDto.type,
       },
     });
 
@@ -85,7 +84,7 @@ export class PokemonService {
 
     const newPokemon = this.pokemonRepository.create({
       ...createPokemonDto,
-      typepokemon: type,
+      type: type,
     });
     return this.pokemonRepository.save(newPokemon);
   }

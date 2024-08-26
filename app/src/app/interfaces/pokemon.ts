@@ -1,4 +1,4 @@
-export interface Pokemon {
+export type Pokemon = {
   [x: string]: any;
   name: string;
   attack: number;
@@ -6,4 +6,9 @@ export interface Pokemon {
   hp: number;
   speed: number;
   imageUrl: string;
+}
+
+export type PokemonContextType = {
+  PokemonsContext: Array<Pokemon>
+  setPokemonContext: (value: Array<Pokemon>) => void; 
 }

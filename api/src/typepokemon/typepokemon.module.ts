@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypepokemonService } from './typepokemon.service';
+import { TypePokemonService } from './typepokemon.service';
 import { TypepokemonController } from './typepokemon.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypePokemon } from './entities/typepokemon.entity';
+import { Type } from './entities/typepokemon.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TypePokemon])],
+  imports: [TypeOrmModule.forFeature([Type])],
   controllers: [TypepokemonController],
-  providers: [TypepokemonService],
+  providers: [TypePokemonService],
   exports: [TypeOrmModule],
 })
 export class TypepokemonModule {}

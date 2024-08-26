@@ -1,28 +1,28 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { TypepokemonService } from './typepokemon.service';
-import { CreateTypepokemonDto } from './dto/create-typepokemon.dto';
+import { TypePokemonService } from './typepokemon.service';
+import { CreateTypeDto } from './dto/create-typepokemon.dto';
 
-@Controller('typepokemon')
+@Controller('type')
 export class TypepokemonController {
-  constructor(private readonly typepokemonService: TypepokemonService) {}
+  constructor(private readonly TypePokemonService: TypePokemonService) {}
 
   @Post()
-  create(@Body() createTypepokemonDto: CreateTypepokemonDto) {
-    return this.typepokemonService.create(createTypepokemonDto);
+  create(@Body() createTypepokemonDto: CreateTypeDto) {
+    return this.TypePokemonService.create(createTypepokemonDto);
   }
 
   @Get()
   findAll() {
-    return this.typepokemonService.findAll();
+    return this.TypePokemonService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.typepokemonService.findOne(+id);
+    return this.TypePokemonService.findOne(+id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.typepokemonService.remove(+id);
+    return this.TypePokemonService.remove(+id);
   }
 }

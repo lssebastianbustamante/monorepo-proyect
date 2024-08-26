@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Pokemon } from "../../interfaces/pokemon";
+import { Pokemon, PokemonContextType } from "../../interfaces/pokemon";
 import PokemonListCard from "./PokemonListCard";
 import {
   Box,
@@ -10,13 +10,38 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import { useCallback, useContext, useEffect, useState } from "react";
+import Context from "./pokemonContext";
+import axios from "axios";
 
-interface PropsPokemons {
-  pokemonsArray: Pokemon[],
-  loading: Boolean
-}
 
-const PokemonList: React.FC<PropsPokemons> = ({pokemonsArray, loading}) => {
+const PokemonList: React.FC = () => {
+  const {PokemonsContext, setPokemonContext} = useContext(Context) as PokemonContextType;
+  const [dataLoaded, setDataLoaded] = useState<Boolean>(false);
+  const [errorData, setError] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  
+  const fetchPokemons = useCallback(async () => {
+    try {
+      const response = await axios.get<Pokemon[]>(
+        "http://localhost:4000/api/pokemon"
+      );
+      setPokemonContext(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      console.log(errorData)
+    }
+  }, [setPokemonContext, errorData]);
+
+  useEffect(() => {
+    
+    if (!dataLoaded) {
+      fetchPokemons();
+      setDataLoaded(true);
+    }
+  }, [dataLoaded, fetchPokemons]);
+
 
   return (
     <div>
@@ -60,7 +85,7 @@ const PokemonList: React.FC<PropsPokemons> = ({pokemonsArray, loading}) => {
               }}
               spacing={3}
             >
-              {pokemonsArray.map((pokemon, index) => (
+              {PokemonsContext.map((pokemon, index) => (
                 <Grid item xs={10} sm={5} md={3} key={index}>
                   <PokemonListCard key={index} pokemon={pokemon} />
                 </Grid>

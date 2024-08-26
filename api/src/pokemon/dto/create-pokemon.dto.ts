@@ -29,5 +29,5 @@ export class CreatePokemonDto {
   imageUrl: string;
 
   @IsNotEmpty({ message: 'Provide an Type' })
-  typepokemon?: string;
+  type?: string;
 }

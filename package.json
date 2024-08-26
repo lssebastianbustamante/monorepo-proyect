@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "concurrently \"cd api && npm run dev\" \"cd app && npm run dev\"",
     "db:create": "npm run db:create --workspace=api",
+    "migration:generate": "npm run migration:generate --workspace=api",
     "seed:run": "npm run seed:run --workspace=api"
   },
   "devDependencies": {

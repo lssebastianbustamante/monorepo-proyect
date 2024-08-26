@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTypepokemonDto } from './dto/create-typepokemon.dto';
+import { CreateTypeDto } from './dto/create-typepokemon.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TypePokemon } from './entities/typepokemon.entity';
+import { Type } from './entities/typepokemon.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TypepokemonService {
+export class TypePokemonService {
   constructor(
-    @InjectRepository(TypePokemon)
-    private typePokemonRepository: Repository<TypePokemon>,
+    @InjectRepository(Type)
+    private typePokemonRepository: Repository<Type>,
   ) {}
-  async create(createTypepokemonDto: CreateTypepokemonDto) {
-    return await this.typePokemonRepository.save(createTypepokemonDto);
+  async create(createTypeDto: CreateTypeDto) {
+    return await this.typePokemonRepository.save(createTypeDto);
   }
 
   async findAll() {

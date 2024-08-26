@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateTypepokemonDto {
+export class CreateTypeDto {
   @IsNotEmpty({ message: 'Field name must be added' })
   @IsString()
   name: string;

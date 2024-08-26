@@ -1,4 +1,4 @@
-import { TypePokemon } from '../../typepokemon/entities/typepokemon.entity';
+import { Type } from '../../typepokemon/entities/typepokemon.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -24,8 +24,8 @@ export class Pokemon {
   @Column({ name: 'imageUrl', length: 70, nullable: false })
   imageUrl: string;
 
-  @ManyToOne(() => TypePokemon, (typepokemon) => typepokemon.id, {
+  @ManyToOne(() => Type, (type) => type.id, {
     eager: true,
   })
-  typepokemon: TypePokemon;
+  type: Type;
 }
