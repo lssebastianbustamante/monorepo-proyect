@@ -1,10 +1,12 @@
-import { AppDataSource } from '../data-source';
+import { DataSource } from 'typeorm';
+import { createDatabase } from 'typeorm-extension';
+import { options } from '../data-source';
 
 (async () => {
-  try {
-    await AppDataSource.initialize();
-    console.log('Database created successfully.');
-  } catch (error) {
-    console.error('Error creating database:', error);
-  }
+  await createDatabase({
+    options,
+  });
+
+  const dataSource = new DataSource(options);
+  await dataSource.initialize();
 })();

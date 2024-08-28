@@ -6,16 +6,16 @@ export class Battle {
   id: number;
 
   @Column()
-  pokemonUno: string;
+  winnerId: number;
 
   @Column()
-  pokemonDos: string;
+  winnerName: string;
 
   @Column()
-  pokemonWinner: string;
+  loserId: number;
 
   @Column()
-  pokemonId: number;
+  loserName: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;

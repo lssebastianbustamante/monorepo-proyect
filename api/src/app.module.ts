@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { BattlesModule } from './battle/battles.module';
-import { DbModule } from './db/db.module';
 import { TypepokemonModule } from './typepokemon/typepokemon.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { options } from './db/data-source';
 
 @Module({
-  imports: [PokemonModule, BattlesModule, DbModule, TypepokemonModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forRoot(options),
+    PokemonModule,
+    BattlesModule,
+    TypepokemonModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

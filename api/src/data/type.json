@@ -1,17 +1,19 @@
-[
-    {
-        "name": "electrico"
-    },
-    {
-        "name": "fuego"
-    },
-    {
-        "name": "planta"
-    },
-    {
-        "name": "aire"
-    },
-    {
-        "name": "agua"
-    }
-]
+{
+    "type": [
+        {
+            "name": "electrico"
+        },
+        {
+            "name": "fuego"
+        },
+        {
+            "name": "planta"
+        },
+        {
+            "name": "aire"
+        },
+        {
+            "name": "agua"
+        }
+    ]
+}

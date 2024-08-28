@@ -20,10 +20,8 @@ interface pokemonWinner {
   id: number;
 }
 
-
-
 const PokemonBattle: React.FC = () => {
-  const {PokemonsContext} = useContext(Context) as PokemonContextType;
+  const { PokemonsContext } = useContext(Context) as PokemonContextType;
   const [loading, setLoading] = useState(true);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon[]>([]);
   const [winner, setWinner] = useState(false);
@@ -48,28 +46,23 @@ const PokemonBattle: React.FC = () => {
 
   async function enviarDatos(datos: any) {
     try {
-      const response = await fetch('http://localhost:4000/api/battles', {
-        method: 'POST',
+      const body = JSON.stringify(datos);
+
+      const response = await fetch("http://localhost:4000/api/battles", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          pokemonUno: selectedPokemon[0].name,
-          pokemonDos: selectedPokemon[1].name,
-          pokemonWinner: datos?.name,
-          pokemonId: datos?.id,
-          hpPokemonWinner: datos?.hp,
-        })
+        body,
       });
-  
+
       if (!response.ok) {
-        throw new Error('La solicitud no fue exitosa');
+        throw new Error("La solicitud no fue exitosa");
       }
-  
+
       const result = await response.json();
-      console.log('Datos enviados:', result);
     } catch (error) {
-      console.error('Error al enviar los datos:', error);
+      console.error("Error al enviar los datos:", error);
     }
   }
 
@@ -79,14 +72,21 @@ const PokemonBattle: React.FC = () => {
     );
 
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `http://localhost:4000/api/pokemon/battle/${pokemon1Id}/${pokemon2Id}`
       );
-      const winner = response.data.winner;
-      console.log(winner)
+
+      const { ganador, perdedor } = data;
+
+      const battleResult = {
+        winnerId: ganador.id,
+        winnerName: ganador.name,
+        loserId: perdedor.id,
+        loserName: perdedor.name,
+      }
       
-      enviarDatos(winner)
-      setPokemonWinner(winner);
+      enviarDatos(battleResult);
+      setPokemonWinner(ganador);
       setWinner(true);
     } catch (error) {
       setError("Error al obtener los datos");

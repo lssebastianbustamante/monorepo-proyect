@@ -31,7 +31,7 @@ export class PokemonController {
       pokemon1Id,
       pokemon2Id,
     );
-    return { winner };
+    return winner;
   }
 
   @Post()

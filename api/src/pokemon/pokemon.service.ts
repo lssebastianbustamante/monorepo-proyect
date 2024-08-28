@@ -29,7 +29,7 @@ export class PokemonService {
       where: {
         id,
       },
-      relations: ['typepokemon'],
+      relations: ['type'],
     });
 
     if (!pokemonFound)
@@ -53,6 +53,9 @@ export class PokemonService {
     let attacker = pokemon1;
     let defender = pokemon2;
 
+    let perdedor;
+    let ganador;
+
     if (
       pokemon2.speed > pokemon1.speed ||
       (pokemon2.speed === pokemon1.speed && pokemon2.attack > pokemon1.attack)
@@ -66,9 +69,29 @@ export class PokemonService {
       defender.hp -= damage;
 
       [attacker, defender] = [defender, attacker];
-
-      return attacker;
     }
+
+    if (attacker.hp === 0) {
+      perdedor = attacker;
+      ganador = defender;
+    } else if (defender.hp === 0) {
+      perdedor = defender;
+      ganador = attacker;
+    }
+
+    const resultado = {
+      ganador: {
+        id: ganador.id,
+        name: ganador.name,
+        hp: ganador.hp,
+      },
+      perdedor: {
+        id: perdedor.id,
+        name: perdedor.name,
+        hp: perdedor.hp,
+      },
+    };
+    return resultado;
   }
 
   async createPokemon(createPokemonDto: CreatePokemonDto): Promise<Pokemon> {

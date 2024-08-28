@@ -1,15 +1,15 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class CreateRegisterDto {
-  @IsString()
-  pokemonUno: string;
+  @IsNumber()
+  winnerId: number;
 
   @IsString()
-  pokemonDos: string;
-
-  @IsString()
-  pokemonWinner: string;
+  winnerName: string;
 
   @IsNumber()
-  pokemonId: number;
+  loserId: number;
+
+  @IsString()
+  loserName: string;
 }
